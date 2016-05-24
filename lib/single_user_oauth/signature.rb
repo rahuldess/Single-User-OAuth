@@ -1,7 +1,6 @@
 require 'openssl'
 require 'base64'
 require 'uri'
-require 'erb'
 
 module SingleUserOauth::Signature
   extend self
@@ -19,19 +18,20 @@ module SingleUserOauth::Signature
   end
 
   def signature_base_string
-    base_string = ""
-    base_string << @request_method
-    base_string << '&'
-    base_string << url_encode( @request_url)
-    base_string << '&'
-    base_string << url_encode(percent_encode_params)
+    encode(@request_method, @request_url, percent_encode_params)
   end
 
   def signing_key
-    singing_key = ""
-    singing_key << url_encode(@consumer_secret)
-    singing_key << '&'
-    singing_key << url_encode(@access_secret)
+    encode(@consumer_secret, @access_secret)
+  end
+
+  def encode(*args)
+    string = ""
+    args.each_with_index do |key, index|
+      string << url_encode(key)
+      string << '&' unless index == args.length-1
+    end
+    string
   end
 
   def calc_signature
@@ -43,15 +43,19 @@ module SingleUserOauth::Signature
   end
 
   def url_encode(item)
-    ERB::Util.url_encode(item)
+    SingleUserOauth::Utilities.url_encode(item)
   end
 
   def percent_encode_params
     @options.reject{ |key| UNWANTED_HEADER_KEYS.include?(key) }.collect do |key, value|
       unless (value.is_a?(Hash) || value.is_a?(Array)) && value.empty?
-        "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
+        "#{escape(key.to_s)}=#{escape(value.to_s)}"
       end
     end.compact.sort! * '&'
+  end
+
+  def escape(item)
+    CGI.escape(item)
   end
 
 end

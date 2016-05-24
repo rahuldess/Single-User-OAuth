@@ -2,6 +2,7 @@ require "single_user_oauth/version"
 require "single_user_oauth/keys"
 require "single_user_oauth/header"
 require "single_user_oauth/signature"
+require "single_user_oauth/utilities"
 
 module SingleUserOauth
   extend self
@@ -9,10 +10,12 @@ module SingleUserOauth
 
   PERMITTED_KEYS  = [:request_method, :base_url, :oauth_consumer_key, :oauth_token, :oauth_consumer_secret, :oauth_access_secret]
 
-  def generate(params)
-    @params        = params
+  def generate_header(params)
+    @params        = params.size.zero? ? {} : params
     @oauth_header  = SingleUserOauth::Header.create(header_params)
   end
+
+  private
 
   def oauth_signature_string
     SingleUserOauth::Signature.create(signature_params)

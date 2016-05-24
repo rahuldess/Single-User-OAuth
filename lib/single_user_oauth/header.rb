@@ -1,5 +1,4 @@
 require 'uri'
-require 'erb'
 
 module SingleUserOauth::Header
   extend self
@@ -28,7 +27,7 @@ module SingleUserOauth::Header
   end
 
   def url_encode(item)
-    ERB::Util.url_encode(item)
+    SingleUserOauth::Utilities.url_encode(item)
   end
 
 end
