@@ -17,8 +17,6 @@ module SingleUserOauth::Signature
     calc_signature
   end
 
-  private
-
   def signature_base_string
     encode(@request_method, @request_url, percent_encode_params)
   end

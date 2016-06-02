@@ -20,6 +20,9 @@ module SingleUserOauth
   private
 
   def oauth_signature_string
+    puts "----signature string------"
+    puts signature_params
+    puts "-------------"
     SingleUserOauth::Signature.create(signature_params)
   end
 
