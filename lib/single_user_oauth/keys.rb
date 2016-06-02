@@ -3,6 +3,8 @@ require 'openssl'
 module SingleUserOauth::Keys
   extend self
 
+  private
+
   def nonce
     @nonce ||= OpenSSL::Random.random_bytes(16).unpack('H*')[0]
   end

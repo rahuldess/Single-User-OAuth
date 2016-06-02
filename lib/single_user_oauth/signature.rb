@@ -17,6 +17,8 @@ module SingleUserOauth::Signature
     calc_signature
   end
 
+  private
+
   def signature_base_string
     encode(@request_method, @request_url, percent_encode_params)
   end
@@ -39,6 +41,9 @@ module SingleUserOauth::Signature
   end
 
   def hmac_sha1
+    puts "--------------------"
+    puts signature_base_string
+    puts "--------------------"
     OpenSSL::HMAC.digest(OpenSSL::Digest::SHA1.new, signing_key, signature_base_string)
   end
 

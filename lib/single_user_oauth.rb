@@ -8,7 +8,9 @@ module SingleUserOauth
   extend self
   extend SingleUserOauth::Keys
 
-  PERMITTED_KEYS  = [:request_method, :base_url, :oauth_consumer_key, :oauth_token, :oauth_consumer_secret, :oauth_access_secret]
+  PERMITTED_KEYS  = [ :request_method, :base_url, :oauth_consumer_key, :oauth_token, :oauth_consumer_secret,
+                      :oauth_access_secret, :delimited, :stall_warnings, :filter_level, :language, :follow,
+                      :track, :locations, :count, :with, :replies, :stringify_friend_id ]
 
   def generate_header(params)
     @params        = params.size.zero? ? {} : params

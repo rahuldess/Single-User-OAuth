@@ -22,6 +22,8 @@ module SingleUserOauth::Header
     end
   end
 
+  private
+
   def required_keys
     @required_keys ||= @keys.reject{ |key| self::UNWANTED_HEADER_KEYS.include?(key) }
   end
