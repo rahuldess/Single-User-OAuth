@@ -6,7 +6,7 @@ require 'single_user_oauth/version'
 Gem::Specification.new do |spec|
   spec.name          = "single_user_oauth"
   spec.version       = SingleUserOauth::VERSION
-  spec.authors       = ["rahul sambari"]
+  spec.authors       = ["rahul dess"]
   spec.email         = ["sandslash.rahul@gmail.com"]
 
   spec.summary       = %q{Generates Twitter specific OAuth header.}
