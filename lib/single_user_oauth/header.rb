@@ -3,7 +3,7 @@ require 'uri'
 module SingleUserOauth::Header
   extend self
 
-  UNWANTED_HEADER_KEYS = [:request_method, :base_url]
+  UNWANTED_HEADER_KEYS = [:request_method, :requested_url]
 
   def create(keys)
     @keys = keys
@@ -21,6 +21,8 @@ module SingleUserOauth::Header
       end
     end
   end
+
+  private
 
   def required_keys
     @required_keys ||= @keys.reject{ |key| self::UNWANTED_HEADER_KEYS.include?(key) }

@@ -5,20 +5,22 @@ require 'uri'
 module SingleUserOauth::Signature
   extend self
 
-  UNWANTED_HEADER_KEYS = [:request_method, :base_url]
+  UNWANTED_HEADER_KEYS = [:request_method, :requested_url]
 
   def create(options)
     @options          = options
     @request_method   = @options.fetch(:request_method, '').upcase
-    @request_url      = @options.fetch(:base_url, '')
+    @requested_url    = @options.fetch(:requested_url, '')
     @consumer_secret  = @options.fetch(:oauth_consumer_secret, '')
     @access_secret    = @options.fetch(:oauth_access_secret, '')
 
     calc_signature
   end
 
+  private
+
   def signature_base_string
-    encode(@request_method, @request_url, percent_encode_params)
+    encode(@request_method, @requested_url, percent_encode_params)
   end
 
   def signing_key
@@ -39,9 +41,6 @@ module SingleUserOauth::Signature
   end
 
   def hmac_sha1
-    puts "--------------------"
-    puts signature_base_string
-    puts "--------------------"
     OpenSSL::HMAC.digest(OpenSSL::Digest::SHA1.new, signing_key, signature_base_string)
   end
 
@@ -50,11 +49,21 @@ module SingleUserOauth::Signature
   end
 
   def percent_encode_params
-    @options.reject{ |key| UNWANTED_HEADER_KEYS.include?(key) }.collect do |key, value|
+    flatten_nested_hash.reject{ |key| UNWANTED_HEADER_KEYS.include?(key) }.collect do |key, value|
       unless (value.is_a?(Hash) || value.is_a?(Array)) && value.empty?
         "#{escape(key.to_s)}=#{escape(value.to_s)}"
       end
     end.compact.sort! * '&'
+  end
+
+  def flatten_nested_hash
+    @options.each_with_object({}) do |(key, value), object|
+      if value.is_a?(Hash)
+        value.collect {|k, v|  object[k] = v }
+      elsif key != 'query_params'
+          object[key] = value
+      end
+    end
   end
 
   def escape(item)

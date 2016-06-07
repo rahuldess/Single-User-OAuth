@@ -8,9 +8,14 @@ module SingleUserOauth
   extend self
   extend SingleUserOauth::Keys
 
-  PERMITTED_KEYS  = [ :request_method, :base_url, :oauth_consumer_key, :oauth_token, :oauth_consumer_secret,
-                      :oauth_access_secret, :delimited, :stall_warnings, :filter_level, :language, :follow,
-                      :track, :locations, :count, :with, :replies, :stringify_friend_id ]
+  PERMITTED_KEYS  = [ :request_method,
+                      :requested_url,
+                      :query_params,
+                      :oauth_consumer_key,
+                      :oauth_token,
+                      :oauth_consumer_secret,
+                      :oauth_access_secret
+                    ]
 
   def generate_header(params)
     @params        = params.size.zero? ? {} : params
@@ -20,9 +25,6 @@ module SingleUserOauth
   private
 
   def oauth_signature_string
-    puts "----signature string------"
-    puts signature_params
-    puts "-------------"
     SingleUserOauth::Signature.create(signature_params)
   end
 
