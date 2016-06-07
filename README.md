@@ -22,7 +22,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+#### Generating OAuth Header.
+`oauth_header = SingleUserOauth.generate_header(oauth_params)`
+
+#### Params to Send For OAuth Generation.
+`def oauth_params
+    {
+      request_method: 'GET',
+      requested_url: 'https://sitestream.twitter.com/1.1/site.json',
+      query_params: {
+        follow: '6253282'
+      },
+      oauth_consumer_key: 'jXkR3j5akZFos2MLF6AK0R8Dj',
+      oauth_token: '730226131987628032-ePiv7Tjnk8WTqnuX8LcPJqq4pNUO0Jc',
+      oauth_consumer_secret: '2oGb8l6U2RsBaSqJrVGLR6oKOcBOkyW29Qgsg1rrF0JimrzaTi',
+      oauth_access_secret: 'Q5eRSqovgfeISYCZAor9ShCcgo4Iz7H7wly6EAltZKduH'
+    }
+  end`
 
 ## Development
 
