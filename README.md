@@ -1,8 +1,9 @@
 # SingleUserOauth
+Before you make a request to Twitter's Streaming API, you have to get authenticated using OAuth.
+This <code>ruby gem</code> will help you to generate unique <code> OAuth Header Token</code>, which is required to make a request to Twitter streaming API's. 
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/single_user_oauth`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+* https://dev.twitter.com/streaming/public has very good documentation on making calls to twitter API's. 
+* This gem implements <code> Single User Oauth </code> type of OAuth authentication.
 
 ## Installation
 
