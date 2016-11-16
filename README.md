@@ -28,17 +28,17 @@ Or install it yourself as:
 
 #### Params to Send For OAuth Generation.
 ```
-def oauth_params
+  def oauth_params
     {
-      request_method: 'GET',
-      requested_url: 'https://sitestream.twitter.com/1.1/site.json',
+      request_method: GET,
+      requested_url: 'https://stream.twitter.com/1.1/statuses/filter.json',
       query_params: {
-        follow: '6253282'
+        track: 'trump'
       },
-      oauth_consumer_key: 'xyz',
-      oauth_token: '123',
-      oauth_consumer_secret: 'abc',
-      oauth_access_secret: 'def'
+      oauth_consumer_key:    'xyz',
+      oauth_token:           'abc',
+      oauth_consumer_secret: '123',
+      oauth_access_secret:   'def'
     }
   end
 ```
